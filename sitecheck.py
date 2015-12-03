@@ -1,7 +1,21 @@
 import urllib2
 import sqlite3
-connection = sqlite3.connect('sitelogs.db')
-cursor = connection.cursor()
+
+
+from sys import argv
+from time import sleep
+
+def setup():
+    ''' Process arguments and establish database connection '''
+
+    if len(argv) == 4:
+        script, url, db_string, interval_str = argv
+        interval = int(interval_str)
+    else:
+        script, url, db_string = argv
+        interval = 60
+
+    return url, db_string, interval
 
 # # Insert a row of data
 # connection.execute("INSERT INTO stocks VALUES ('2006-01-05','BUY','RHAT',100,35.14)")
@@ -13,44 +27,46 @@ cursor = connection.cursor()
 # # Just be sure any changes have been committed or they will be lost.
 # connection.close()
 
-url = "https://www.google.com/"
-req = urllib2.Request(url)
+# url = "https://www.google.com/"
 
-try:
-    resp = urllib2.urlopen(req)
-    
-    print "url: ", url
-    print "status code: ", resp.code
-    print "timestamp: ", resp.info()['date']
+def check_site(url, interval):
 
-    timestamp = resp.info()['date']
-    status_code = resp.code
+    req = urllib2.Request(url)
 
-    # QUERY = "INSERT INTO Melons VALUES (?, ?)"
-    # cursor.execute(QUERY, (common_name, price))
-    # connection.commit()
+    while True:
 
-    INS_QUERY = "INSERT INTO Sitelogs VALUES (?, ?, ?)"
-    cursor.execute(INS_QUERY, (url, status_code, timestamp))
-    connection.commit()
+        try:
+            resp = urllib2.urlopen(url, None, 2.5)
+            # resp = urllib2.urlopen("http://google.com", None, 2.5)
 
-except urllib2.HTTPError as e:
-	print "HTTPError", e.code
-    
-except urllib2.URLError as e:
-    # Not an HTTP-specific error (e.g. connection refused)
-    # ...
-    print "URLError: ", e
+            timestamp = resp.info()['date']
+           
+            status_code = resp.code
 
-resp.close()
+            INS_QUERY = "INSERT INTO Sitelogs VALUES (?, ?, ?)"
+            print url, status_code, timestamp
+            cursor.execute(INS_QUERY, (url, status_code, timestamp))
+            connection.commit()
 
-# import urllib2
-# response = urllib2.urlopen('http://pythonforbeginners.com/')
-# print response.info()
-# html = response.read()
-# # do something
-# response.close()  # best practice to close the file
+        except urllib2.HTTPError as e:
+        	print "HTTPError", e.code
+        
+        except urllib2.URLError as e:
+            # Not an HTTP-specific error (e.g. connection refused)
+            # ...
+            print "URLError: ", e
 
+        resp.close()
+
+        sleep(interval)
+
+url, db_string, interval = setup()
+
+connection = sqlite3.connect(db_string)
+
+cursor = connection.cursor()  
+
+check_site(url, interval)
 
     
 
