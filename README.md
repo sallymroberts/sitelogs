@@ -2,7 +2,7 @@
 
 Sitecheck checks the status of the requested website and logs the status to the sqlite Sitelogs table.
 
-Files include:
+###### Files include:
 
 - requirements.txt: Contains requirements for creating a virtual environment to run the application
 - sitelogs_db.py: Creates the sqlite3 sitelogs.db database and the Sitelogs table
@@ -28,10 +28,10 @@ python sitecheck.py "https://www.google.com/" "sitelogs.db" 30
 
 ###### Generic syntax for command to run the sitecheck.py file:
 
-python sitecheck.py <url> <sqlite 3 database> [interval] 
+python sitecheck.py url sqlite_3_database [interval] 
 
 ###### Parameters for sitecheck.py:
 
 - url of website for which status is to be checked
-- name of sqlite3 database, the exact value required is "sitelogs.db"
+- name of sqlite 3 database, the exact value required is "sitelogs.db"
 - optional: interval in seconds specifying frequency of checking website status; if not specified, defaults to 60
