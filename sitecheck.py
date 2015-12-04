@@ -45,8 +45,6 @@ def validate_parms():
 # If url contains a .jpg or .mov, prompt user to proceed/cancel
     
     url_low = url.lower()
-
-    print "url, url.lower: ", url, url_low
     
     if ".jpg" in url_low or ".mov" in url_low:
         answer = raw_input("Url contains .jpg or .mov, enter c to cancel, y to proceed: ")

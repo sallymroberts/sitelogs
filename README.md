@@ -20,11 +20,17 @@ Files include:
  
 ### Run the application:
 
-An example command to run the sitecheck.py file in the virtual environment:
+This application is executed from the command line and runs until manually cancelled from the command line.
+
+###### Example command to run sitecheck.py file in virtual environment:
 
 python sitecheck.py "https://www.google.com/" "sitelogs.db" 30
 
-Parameters for sitecheck.py:
+###### Generic syntax for command to run the sitecheck.py file:
+
+python sitecheck.py <url> <sqlite 3 database> [interval] 
+
+###### Parameters for sitecheck.py:
 
 - url of website for which status is to be checked
 - name of sqlite3 database, the exact value required is "sitelogs.db"
