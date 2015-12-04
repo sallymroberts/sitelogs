@@ -33,5 +33,5 @@ python sitecheck.py url sqlite_3_database [interval]
 ###### Parameters for sitecheck.py:
 
 - url of website for which status is to be checked
-- name of sqlite 3 database, the exact value required is "sitelogs.db"
+- name of sqlite 3 database, the exact value required is "sitelogs.db", to access the database created by running command above: python sitelogs_db.py 
 - optional: interval in seconds specifying frequency of checking website status; if not specified, defaults to 60
